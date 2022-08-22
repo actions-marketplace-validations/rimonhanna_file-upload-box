@@ -3,13 +3,13 @@ const spsave = require('spsave').spsave
 
 try {
   // Get action inputs.
-  const siteUrl = process.env['SITE_URL'] || ''
-  const clientId = process.env['CLIENT_ID'] || ''
-  const clientSecret = process.env['CLIENT_SECRET'] || ''
-  const realm = process.env['REALM']
-  const destinationPath = process.env['DESTINATION_PATH']
-  const sourcePath = (process.env['SOURCE_PATH'] || '').split(';')
-
+  const siteUrl = core.getInput("SITE_URL") || ''
+  const clientId = core.getInput('CLIENT_ID') || ''
+  const clientSecret = core.getInput('CLIENT_SECRET') || ''
+  const realm = core.getInput('REALM')
+  const destinationPath = core.getInput('DESTINATION_PATH')
+  const sourcePath = (core.getInput('SOURCE_PATH') || '').split(';')
+  
   // Define SPSave Configuration
   const coreOptions = {
     siteUrl: siteUrl

@@ -1,4 +1,4 @@
-name: 'OD SP File Upload'
+name: 'OneDrive SharePoint File Upload'
 description: 'Upload a file, or files, to SharePoint Online(one drive) using client secrets'
 inputs:
   SITE_URL:
@@ -20,29 +20,5 @@ inputs:
     description: 'Source file paths to be uploaded to SPO. Separate multiple files using a semicolon.'
     required: true
 runs:
-  using: 'composite'
-
-  steps:
-    - name: Install Node
-      uses: actions/setup-node@v2
-      with:
-        node-version: '16'
-
-    - name: Check env
-      shell: bash
-      run: env
-
-    - name: Install Dependencies
-      shell: bash
-      run: npm install
-
-    - name: Upload files
-      shell: bash
-      run: node ./index.js
-      env:
-        SITE_URL: ${{ inputs.SITE_URL }}
-        CLIENT_ID: ${{ inputs.CLIENT_ID }}
-        CLIENT_SECRET: ${{ inputs.CLIENT_SECRET }}
-        REALM: ${{ inputs.REALM }}
-        DESTINATION_PATH: ${{ inputs.DESTINATION_PATH }}
-        SOURCE_PATH: ${{ inputs.SOURCE_PATH }}
+  using: "node16"
+  main: "index.js"

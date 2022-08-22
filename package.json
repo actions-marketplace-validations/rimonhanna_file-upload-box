@@ -4,7 +4,8 @@
   "description": "Upload a file, or files, to SharePoint Online using the spsave package.",
   "main": "index.js",
   "scripts": {
-    "start": "node ./index.js"
+    "start": "node ./index.js",
+    "build": "npx ncc build index.js --license licenses.txt"
   },
   "repository": {
     "type": "git",
