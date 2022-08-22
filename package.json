@@ -19,6 +19,7 @@
   "homepage": "https://github.com/german1311/file-upload-one-drive#readme",
   "devDependencies": {
     "@actions/core": "^1.6.0",
+    "@vercel/ncc": "^0.33.3",
     "spsave": "^4.0.2"
   }
 }
