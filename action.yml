@@ -1,5 +1,8 @@
 name: 'OneDrive SharePoint File Upload'
 description: 'Upload a file, or files, to SharePoint Online(one drive) using client secrets'
+branding:
+  icon: bar-chart-2
+  color: green
 inputs:
   SITE_URL:
     description: 'Destination SPO Site URL'
