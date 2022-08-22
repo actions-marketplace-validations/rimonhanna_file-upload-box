@@ -15,7 +15,7 @@ inputs:
     required: true
   REALM:
     description: 'SPO realm.'
-    required: true
+    required: false
   DESTINATION_PATH:
     description: 'Relative destination path on SPO site. If path does not exist, it will be created.'
     required: false
