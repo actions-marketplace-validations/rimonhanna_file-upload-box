@@ -6,7 +6,7 @@ try {
   const siteUrl = core.getInput("SITE_URL") || ''
   const clientId = core.getInput('CLIENT_ID') || ''
   const clientSecret = core.getInput('CLIENT_SECRET') || ''
-  const realm = core.getInput('REALM')
+  const realm = core.getInput('REALM') || ''
   const destinationPath = core.getInput('DESTINATION_PATH')
   const sourcePath = (core.getInput('SOURCE_PATH') || '').split(';')
   
