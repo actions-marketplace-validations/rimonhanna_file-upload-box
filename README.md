@@ -1,4 +1,4 @@
-# File Opload Box
+# File Upload Box
 
 Upload to Box.
 
