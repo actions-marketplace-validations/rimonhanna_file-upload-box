@@ -23,5 +23,5 @@ outputs:
   DOWNLOAD_URLs:
     description: 'Box file(s) download url.'
 runs:
-  using: "node14"
+  using: "node12"
   main: "index.js"
