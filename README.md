@@ -10,6 +10,10 @@ Upload to Box.
 `SOURCE_PATH`: Source file path(s) to be uploaded to Box. Separate multiple files using a semicolon.<br>
 `DESTINATION_FOLDER_ID`: Box destination folder ID, last part of the url when you navigate to the folder in your browser.<br>
 
+
+## Outputs:
+`DOWNLOAD_URLs`: Box file(s) download url.<br>
+
 ## Assumptions
 
 - Follow [box](https://developer.box.com/guides/authentication/client-credentials/client-credentials-setup/) docs to generate client id and secret
@@ -19,7 +23,6 @@ Upload to Box.
 
 ```yaml
 ...
-
 
 - name: Box File Upload
   uses: rimonhanna/file-upload-box@v1.0.0
