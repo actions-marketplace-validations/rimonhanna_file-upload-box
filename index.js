@@ -54,33 +54,35 @@ try {
     let stream = fs.createReadStream(file.source);
 
     let downloadFile = async function(id) {
-      let downloadUrl = await box.files.getDownloadURL(id);
+      let downloadUrl = await boxClient.files.getDownloadURL(id);
       output.push(downloadUrl);
       core.setOutput('DOWNLOAD_URLs', output);
     }
   
-    boxClient.files.uploadFile(file.destination, file.name, stream)
-    .then(async items => {
-      await downloadFile(items.entries[0].id);
-    })
-    .catch(error => { 
-      if (error) {
-        console.log(`Error uploading file: ${error}`);
-        if(error.statusCode == 409) {
-          //error.response.body.context_info.conflicts.id
-          //JSON.stringify({"name": file.name, "parent": {"id": file.destination}})
-          boxClient.files.uploadNewFileVersion(error.response.body.context_info.conflicts.id, stream).then(async items => {
-            await downloadFile(items.entries[0].id);
-          }).catch(fileVersionError => { 
-              if (fileVersionError) {
-                console.log(fileVersionError);
-                core.setFailed(`Error uploading file version: ${fileVersionError}`);
-              }
-          });
-        } else {
+    // Verify that uploading a 200MB file named "Preso.ppt" to folder 12345 would succeed
+    boxClient.files.preflightUploadFile(file.destination, { name: file.name, })
+    .then(_ => {
+      boxClient.files.uploadFile(file.destination, file.name, stream)
+      .then(async items => {
+        await downloadFile(items.entries[0].id);
+      })
+      .catch(error => { 
+        if (error) {
+          console.log(`Error uploading file: ${error}`);
           core.setFailed(`Error uploading file: ${error}`);
         }
-      }
+      });
+      
+    })
+    .catch(error => { 
+      boxClient.files.uploadNewFileVersion(error.response.body.context_info.conflicts.id, stream).then(async items => {
+        await downloadFile(items.entries[0].id);
+      }).catch(fileVersionError => { 
+          if (fileVersionError) {
+            console.log(`Error uploading file version: ${error}`);
+            core.setFailed(`Error uploading file version: ${fileVersionError}`);
+          }
+      });
     });
     
   });
