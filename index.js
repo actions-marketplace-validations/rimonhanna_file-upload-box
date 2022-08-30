@@ -56,7 +56,7 @@ try {
     let downloadFile = async function(id) {
       let downloadUrl = await boxClient.files.getDownloadURL(id);
       output.push(downloadUrl);
-      core.setOutput('DOWNLOAD_URLs', output);
+      core.setOutput('DOWNLOAD_URLs', JSON.stringify(output));
     }
   
     // Verify that uploading a 200MB file named "Preso.ppt" to folder 12345 would succeed
