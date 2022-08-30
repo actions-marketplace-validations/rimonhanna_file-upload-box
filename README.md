@@ -7,8 +7,8 @@ Upload to Box.
 `CLIENT_ID`: Box App Client ID.<br>
 `CLIENT_SECRET`: Box App client secret.<br>
 `ENTERPRISE_ID`: Box App Enterprise ID.<br>
-`DESTINATION_FOLDER_ID`: Box destination folder ID, last part of the url when you navigate to the folder on the web.<br>
 `SOURCE_PATH`: Source file path(s) to be uploaded to Box. Separate multiple files using a semicolon.<br>
+`DESTINATION_FOLDER_ID`: Box destination folder ID, last part of the url when you navigate to the folder in your browser.<br>
 
 ## Assumptions
 
