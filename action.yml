@@ -1,26 +1,23 @@
-name: 'OneDrive SharePoint File Upload'
-description: 'Upload a file, or files, to SharePoint Online(one drive) using client secrets'
+name: 'Box File Upload'
+description: 'Upload a file, or files, to Box using client secrets'
 branding:
   icon: bar-chart-2
   color: green
 inputs:
-  SITE_URL:
-    description: 'Destination SPO Site URL'
-    required: true
   CLIENT_ID:
-    description: 'Must have write privileges on designated site.'
+    description: 'Box App Client ID.'
     required: true
   CLIENT_SECRET:
-    description: 'SPO client secret.'
+    description: 'Box App client secret.'
     required: true
-  REALM:
-    description: 'SPO realm.'
-    required: false
-  DESTINATION_PATH:
-    description: 'Relative destination path on SPO site. If path does not exist, it will be created.'
+  ENTERPRISE_ID:
+    description: 'Box App Enterprise ID'
+    required: true
+  DESTINATION_FOLDER_ID:
+    description: 'Box destination folder ID, last part of the url when you navigate to the folder on the web'
     required: false
   SOURCE_PATH:
-    description: 'Source file paths to be uploaded to SPO. Separate multiple files using a semicolon.'
+    description: 'Source file paths to be uploaded to Box. Separate multiple files using a semicolon.'
     required: true
 runs:
   using: "node16"
