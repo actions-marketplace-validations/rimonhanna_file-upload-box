@@ -53,12 +53,6 @@ try {
 
     let stream = fs.createReadStream(file.source);
 
-    let downloadFile = async function (id) {
-      let downloadUrl = await boxClient.files.getDownloadURL(id);
-      output.push(downloadUrl);
-      core.setOutput('DOWNLOAD_URLs', output.join(';'));
-    }
-
     // Verify that uploading a 200MB file named "Preso.ppt" to folder 12345 would succeed
     boxClient.files.preflightUploadFile(file.destination, {
         name: file.name,
