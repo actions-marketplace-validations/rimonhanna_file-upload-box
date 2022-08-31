@@ -39,55 +39,52 @@ try {
   let output = [];
   sourcePaths.forEach(sourcePath => {
     let filename = sourcePath.split('/').slice(-1).pop()
-  
+
     const file = {
       name: filename,
       destination: destinationFolderId,
       source: sourcePath
     }
-  
+
     let boxSdkInstance = BoxSDK.getPreconfiguredInstance(credentials);
-  
+
     // Get the service account client, used to create and manage app user accounts
     let boxClient = boxSdkInstance.getAnonymousClient();
-  
+
     let stream = fs.createReadStream(file.source);
 
-    let downloadFile = async function(id) {
+    let downloadFile = async function (id) {
       let downloadUrl = await boxClient.files.getDownloadURL(id);
       output.push(downloadUrl);
       core.setOutput('DOWNLOAD_URLs', output.join(';'));
     }
-  
+
     // Verify that uploading a 200MB file named "Preso.ppt" to folder 12345 would succeed
-    boxClient.files.preflightUploadFile(file.destination, { name: file.name, })
-    .then(_ => {
-      boxClient.files.uploadFile(file.destination, file.name, stream)
-      .then(async items => {
-        await downloadFile(items.entries[0].id);
+    boxClient.files.preflightUploadFile(file.destination, {
+        name: file.name,
       })
-      .catch(error => { 
-        if (error) {
-          console.log(`Error uploading file: ${error}`);
-          core.setFailed(`Error uploading file: ${error}`);
-        }
+      .then(_ => {
+        boxClient.files.uploadFile(file.destination, file.name, stream)
+          .catch(error => {
+            if (error) {
+              console.log(`Error uploading file: ${error}`);
+              core.setFailed(`Error uploading file: ${error}`);
+            }
+          });
+      })
+      .catch(error => {
+        boxClient.files.uploadNewFileVersion(error.response.body.context_info.conflicts.id, stream)
+          .catch(fileVersionError => {
+            if (fileVersionError) {
+              console.log(`Error uploading file version: ${error}`);
+              core.setFailed(`Error uploading file version: ${fileVersionError}`);
+            }
+          });
       });
-      
-    })
-    .catch(error => { 
-      boxClient.files.uploadNewFileVersion(error.response.body.context_info.conflicts.id, stream).then(async items => {
-        await downloadFile(items.entries[0].id);
-      }).catch(fileVersionError => { 
-          if (fileVersionError) {
-            console.log(`Error uploading file version: ${error}`);
-            core.setFailed(`Error uploading file version: ${fileVersionError}`);
-          }
-      });
-    });
-    
+
   });
 
-} catch(error) {
+} catch (error) {
   console.log(error);
   core.setFailed(`Error uploading file: ${error}`);
 }
