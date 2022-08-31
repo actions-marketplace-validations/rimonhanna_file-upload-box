@@ -19,9 +19,6 @@ inputs:
   SOURCE_PATH:
     description: 'Source file paths to be uploaded to Box. Separate multiple files using a semicolon.'
     required: true
-outputs:
-  DOWNLOAD_URLs:
-    description: 'Box file(s) download url.'
 runs:
   using: "node12"
   main: "index.js"
